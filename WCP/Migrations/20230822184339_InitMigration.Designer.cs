@@ -10,7 +10,7 @@ using WCP.Context;
 
 namespace WCP.Migrations
 {
-    [DbContext(typeof(CompanyContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230822184339_InitMigration")]
     partial class InitMigration
     {

@@ -14,9 +14,9 @@ namespace WCP.Controllers
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
-        private readonly CompanyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DepartmentsController(CompanyContext context)
+        public DepartmentsController(ApplicationDbContext context)
         {
             _context = context;
         }

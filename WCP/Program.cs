@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSqliteDB(builder.Configuration);
+builder.Services.AddIdentityAuthentication(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(CompanyMapperProfile));
 
 builder.Services.AddControllers().AddNewtonsoftJson(opts =>
@@ -16,6 +17,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(opts =>
     opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.SeedData();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WCP.Context;
 
@@ -10,9 +11,11 @@ using WCP.Context;
 namespace WCP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20230823063305_User2EmployeeRelation")]
+    partial class User2EmployeeRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -221,7 +224,7 @@ namespace WCP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("WCP.Models.Employee", b =>
@@ -249,7 +252,7 @@ namespace WCP.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Employee", (string)null);
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
