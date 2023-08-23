@@ -35,7 +35,7 @@ namespace WCP.Controllers
                 return NotFound();
             }
 
-            return await _context.Employees.Include(e => e.Department).AsNoTracking().ToListAsync();
+            return await _context.Employees.Include(e => e.Department).Include(e => e.User).AsNoTracking().ToListAsync();
         }
 
         // GET: api/Employees/Search

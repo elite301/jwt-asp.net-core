@@ -9,6 +9,6 @@ namespace WCP.Models
         public string Name { get; set; } = null!;
         public DateTime Birthday { get; set; }
         public int DepartmentId { get; set; }
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }
     }
 }

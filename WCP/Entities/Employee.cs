@@ -19,7 +19,8 @@ namespace WCP.Models
         public int DepartmentId { get; set; }
 
         public Department Department { get; set; } = null!;
-
+        
+        public string? UserId { get; set; }
         public IdentityUser? User { get; set; }
     }
 }
