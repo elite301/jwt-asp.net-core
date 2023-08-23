@@ -37,6 +37,20 @@ namespace WCP.Controllers
             return await _context.Employees.Include(e => e.Department).AsNoTracking().ToListAsync();
         }
 
+        // GET: api/Employees/Search
+        [HttpGet("Search")]
+        public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployees([FromQuery] string? name)
+        {
+            if (_context.Employees == null)
+            {
+                return NotFound();
+            }
+
+            if (name != null) name = name.ToLower();
+
+            return await _context.Employees.Where(e => name == null || e.Name.ToLower().IndexOf(name) != -1).Include(e => e.Department).AsNoTracking().ToListAsync();
+        }
+
         // GET: api/Employees/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
