@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WCP.Context;
@@ -99,6 +100,26 @@ namespace WCP.Controllers
 
             Employee employee = _mapper.Map<Employee>(employeeDto);
             _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Employee>> PatchEmployee(int id, JsonPatchDocument<Employee> patchDocument)
+        {
+            if (_context.Employees == null)
+            {
+                return Problem("Entity set 'CompanyContext.Employees'  is null.");
+            }
+
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee == null) return NotFound();
+
+            patchDocument.ApplyTo(employee);
+
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
