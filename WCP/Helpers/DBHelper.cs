@@ -10,7 +10,7 @@ namespace WCP.Helpers
 
         public static IServiceCollection AddSqliteDB(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CompanyContext>(opts => opts.UseSqlite(configuration.GetConnectionString("LocalDB")));
+            services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlite(configuration.GetConnectionString("LocalDB")));
 
             return services;
         }
@@ -19,7 +19,7 @@ namespace WCP.Helpers
         {
             using (var scope = app.Services.CreateScope())
             {
-                CompanyContext dbContext = scope.ServiceProvider.GetRequiredService<CompanyContext>();
+                ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                 dbContext.Seed();
             }

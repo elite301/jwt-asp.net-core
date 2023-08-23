@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,10 @@ namespace WCP.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly CompanyContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public EmployeesController(CompanyContext context, IMapper mapper)
+        public EmployeesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -34,10 +35,11 @@ namespace WCP.Controllers
                 return NotFound();
             }
 
-            return await _context.Employees.Include(e => e.Department).AsNoTracking().ToListAsync();
+            return await _context.Employees.Include(e => e.Department).Include(e => e.User).AsNoTracking().ToListAsync();
         }
 
         // GET: api/Employees/Search
+        [Authorize]
         [HttpGet("Search")]
         public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployees([FromQuery] string? name)
         {

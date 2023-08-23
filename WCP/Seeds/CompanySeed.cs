@@ -5,7 +5,7 @@ namespace WCP.Seeds
 {
     public static class CompanySeed
     {
-        public static void Seed(this CompanyContext dbContext)
+        public static void Seed(this ApplicationDbContext dbContext)
         {
             if (dbContext.Employees.Any() || dbContext.Departments.Any()) return;
 

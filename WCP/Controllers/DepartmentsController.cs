@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,14 @@ using WCP.Models;
 
 namespace WCP.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
-        private readonly CompanyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DepartmentsController(CompanyContext context)
+        public DepartmentsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -29,7 +31,7 @@ namespace WCP.Controllers
           {
               return NotFound();
           }
-            return await _context.Departments.Include(e => e.Employees).AsNoTracking().ToListAsync();
+            return await _context.Departments.AsNoTracking().ToListAsync();
         }
 
         // GET: api/Departments/5
